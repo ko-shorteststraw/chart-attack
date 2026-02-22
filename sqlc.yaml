@@ -1,0 +1,11 @@
+version: "2"
+sql:
+  - engine: "sqlite"
+    queries: "sql/queries"
+    schema: "migrations/sqlite/000001_initial_schema.up.sql"
+    gen:
+      go:
+        package: "sqlc"
+        out: "internal/infrastructure/db/sqlc"
+        emit_empty_slices: true
+        emit_exact_table_names: false

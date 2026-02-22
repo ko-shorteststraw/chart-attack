@@ -1,0 +1,128 @@
+{{template "base" .}}
+{{define "content"}}
+<div class="mb-3">
+    <h1>{{.Patient.FullName}}</h1>
+    <p class="text-muted">
+        Room {{.Patient.RoomBed}} &bull; MRN: {{.Patient.MRN}}
+        {{if ne .Patient.CodeStatus "Full Code"}}
+        <span class="Label Label--danger">{{.Patient.CodeStatus}}</span>
+        {{end}}
+        {{if .Patient.FallRisk}}
+        <span class="Label Label--warning">Fall Risk</span>
+        {{end}}
+        {{if ne .Patient.IsolationType "None"}}
+        <span class="Label Label--purple">{{.Patient.IsolationType}}</span>
+        {{end}}
+    </p>
+</div>
+
+<nav class="d-flex gap-2 mb-3" style="border-bottom: 1px solid var(--color-border-default); padding-bottom: 8px;">
+    <a href="/patients/{{.Patient.Id}}" class="btn btn-sm btn-primary">Profile</a>
+    <a href="/patients/{{.Patient.Id}}/vitals" class="btn btn-sm btn-outline">Vitals</a>
+    <a href="/patients/{{.Patient.Id}}/mar" class="btn btn-sm btn-outline">MAR</a>
+    <a href="/patients/{{.Patient.Id}}/tasks" class="btn btn-sm btn-outline">Tasks</a>
+</nav>
+
+<!-- Demographics -->
+<div class="Box mb-3">
+    <div class="Box-header">Demographics</div>
+    <div class="Box-body">
+        <div class="grid grid-cols-3">
+            <div><strong>DOB:</strong> {{.Patient.DateOfBirth.Format "01/02/2006"}}</div>
+            <div><strong>Admit Date:</strong> {{.Patient.AdmitDate.Format "01/02/2006"}}</div>
+            <div><strong>Code Status:</strong> {{.Patient.CodeStatus}}</div>
+        </div>
+        {{if .Patient.Allergies}}
+        <div class="mt-2"><strong>Allergies:</strong> {{range $i, $a := .Patient.Allergies}}{{if $i}}, {{end}}{{$a}}{{end}}</div>
+        {{end}}
+    </div>
+</div>
+
+<!-- Diagnoses -->
+<div class="Box mb-3">
+    <div class="Box-header d-flex align-center justify-between">
+        <span>Diagnoses</span>
+    </div>
+    <div class="Box-body">
+        <div id="diagnosis-list"
+             data-on-load="@get('/api/patients/{{.Patient.Id}}/diagnoses/stream')">
+            {{template "diagnosis_list" .}}
+        </div>
+        <form class="d-flex gap-2 mt-2"
+              data-signals="{newDiagnosis: ''}"
+              data-on-submit__prevent="@post('/api/patients/{{.Patient.Id}}/diagnoses')">
+            <input type="text" data-bind-newDiagnosis placeholder="Add diagnosis..." style="margin-bottom:0;flex:1;">
+            <button type="submit" class="btn btn-sm btn-primary">Add</button>
+        </form>
+    </div>
+</div>
+
+<!-- Emergency Contacts -->
+<div class="Box mb-3">
+    <div class="Box-header">Emergency Contacts</div>
+    <div class="Box-body">
+        <div id="emergency-contacts-list"
+             data-on-load="@get('/api/patients/{{.Patient.Id}}/emergency-contacts/stream')">
+            {{template "emergency_contacts_list" .}}
+        </div>
+        <form class="mt-2"
+              data-signals="{ecName: '', ecRelationship: '', ecPhone: '', ecEmail: ''}"
+              data-on-submit__prevent="@post('/api/patients/{{.Patient.Id}}/emergency-contacts')">
+            <div class="grid grid-cols-4">
+                <input type="text" data-bind-ecName placeholder="Name" style="margin-bottom:0;">
+                <input type="text" data-bind-ecRelationship placeholder="Relationship" style="margin-bottom:0;">
+                <input type="text" data-bind-ecPhone placeholder="Phone" style="margin-bottom:0;">
+                <input type="text" data-bind-ecEmail placeholder="Email" style="margin-bottom:0;">
+            </div>
+            <button type="submit" class="btn btn-sm btn-primary mt-2">Add Contact</button>
+        </form>
+    </div>
+</div>
+
+<!-- Vaccinations -->
+<div class="Box mb-3">
+    <div class="Box-header">Vaccination Records</div>
+    <div class="Box-body">
+        <div id="vaccinations-list"
+             data-on-load="@get('/api/patients/{{.Patient.Id}}/vaccinations/stream')">
+            {{template "vaccinations_list" .}}
+        </div>
+        <form class="mt-2"
+              data-signals="{vaccineName: '', vaccineDate: '', vaccineLot: '', vaccineSite: ''}"
+              data-on-submit__prevent="@post('/api/patients/{{.Patient.Id}}/vaccinations')">
+            <div class="grid grid-cols-4">
+                <input type="text" data-bind-vaccineName placeholder="Vaccine name" style="margin-bottom:0;">
+                <input type="date" data-bind-vaccineDate style="margin-bottom:0;">
+                <input type="text" data-bind-vaccineLot placeholder="Lot #" style="margin-bottom:0;">
+                <input type="text" data-bind-vaccineSite placeholder="Site" style="margin-bottom:0;">
+            </div>
+            <button type="submit" class="btn btn-sm btn-primary mt-2">Add Vaccination</button>
+        </form>
+    </div>
+</div>
+
+<!-- Health History -->
+<div class="Box mb-3">
+    <div class="Box-header">Health History</div>
+    <div class="Box-body">
+        <div id="health-history-list"
+             data-on-load="@get('/api/patients/{{.Patient.Id}}/health-history/stream')">
+            {{template "health_history_list" .}}
+        </div>
+        <form class="mt-2"
+              data-signals="{hhCondition: '', hhStatus: 'Active', hhDescription: ''}"
+              data-on-submit__prevent="@post('/api/patients/{{.Patient.Id}}/health-history')">
+            <div class="grid grid-cols-3">
+                <input type="text" data-bind-hhCondition placeholder="Condition" style="margin-bottom:0;">
+                <select data-bind-hhStatus style="margin-bottom:0;">
+                    <option value="Active">Active</option>
+                    <option value="Resolved">Resolved</option>
+                    <option value="Chronic">Chronic</option>
+                </select>
+                <input type="text" data-bind-hhDescription placeholder="Description" style="margin-bottom:0;">
+            </div>
+            <button type="submit" class="btn btn-sm btn-primary mt-2">Add Entry</button>
+        </form>
+    </div>
+</div>
+{{end}}

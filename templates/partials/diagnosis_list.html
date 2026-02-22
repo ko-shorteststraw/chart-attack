@@ -1,0 +1,16 @@
+{{define "diagnosis_list"}}
+<div id="diagnosis-items">
+    {{if .Patient.Diagnoses}}
+    {{range .Patient.Diagnoses}}
+    <div class="d-flex align-center justify-between mb-2" style="padding: 4px 0; border-bottom: 1px solid var(--color-border-muted);">
+        <span>{{.}}</span>
+        <button class="btn btn-sm" style="color: var(--color-danger-fg); border: none; padding: 2px 8px;"
+                data-on-click="@post('/api/patients/{{$.Patient.Id}}/diagnoses/remove', {filterSignals: false})"
+                data-signals="{removeDiagnosis: '{{.}}'}">Remove</button>
+    </div>
+    {{end}}
+    {{else}}
+    <p class="text-muted" style="margin:0;">No diagnoses recorded.</p>
+    {{end}}
+</div>
+{{end}}

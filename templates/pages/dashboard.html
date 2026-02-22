@@ -1,0 +1,23 @@
+{{template "base" .}}
+{{define "content"}}
+<div class="d-flex align-center justify-between mb-3">
+    <div>
+        <h1>Patient Census</h1>
+        <p class="text-muted mb-2">Currently admitted patients</p>
+    </div>
+    <a href="/patients/new" class="btn btn-primary">Admit Patient</a>
+</div>
+
+<div id="census-grid" class="census-grid"
+     data-on-load="@get('/api/census/stream')">
+    {{range .Patients}}
+    {{template "patient_card" .}}
+    {{else}}
+    <div class="Box">
+        <div class="Box-body">
+            <p class="text-muted" style="margin:0;">No patients currently admitted.</p>
+        </div>
+    </div>
+    {{end}}
+</div>
+{{end}}

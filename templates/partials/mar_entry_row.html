@@ -1,0 +1,22 @@
+{{define "mar_table_body"}}
+<tbody id="mar-tbody">
+    {{range .Entries}}
+    <tr id="mar-row-{{.Id}}">
+        <td>{{.MedicationName}}</td>
+        <td>{{.Dose}}</td>
+        <td>{{.Route}}</td>
+        <td>{{.ScheduledTime.Format "01/02 15:04"}}</td>
+        <td>{{if .AdministeredAt}}{{.AdministeredAt.Format "01/02 15:04"}}{{else}}&mdash;{{end}}</td>
+        <td>
+            {{if eq .Status "Given"}}<span class="Label Label--success">Given</span>
+            {{else if eq .Status "Held"}}<span class="Label Label--warning">Held</span>
+            {{else if eq .Status "Refused"}}<span class="Label Label--danger">Refused</span>
+            {{else}}<span class="Label Label--default">{{.Status}}</span>{{end}}
+        </td>
+        <td>{{.Notes}}</td>
+    </tr>
+    {{else}}
+    <tr><td colspan="7">No medications administered yet.</td></tr>
+    {{end}}
+</tbody>
+{{end}}

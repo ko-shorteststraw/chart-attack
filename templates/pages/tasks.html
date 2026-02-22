@@ -1,0 +1,71 @@
+{{template "base" .}}
+{{define "content"}}
+<div class="mb-3">
+    <h1>{{.Patient.FullName}}</h1>
+    <p class="text-muted">
+        Room {{.Patient.RoomBed}} &bull; MRN: {{.Patient.MRN}}
+    </p>
+</div>
+
+<nav class="d-flex gap-2 mb-3" style="border-bottom: 1px solid var(--color-border-default); padding-bottom: 8px;">
+    <a href="/patients/{{.Patient.Id}}" class="btn btn-sm btn-outline">Profile</a>
+    <a href="/patients/{{.Patient.Id}}/vitals" class="btn btn-sm btn-outline">Vitals</a>
+    <a href="/patients/{{.Patient.Id}}/mar" class="btn btn-sm btn-outline">MAR</a>
+    <a href="/patients/{{.Patient.Id}}/tasks" class="btn btn-sm btn-primary">Tasks</a>
+</nav>
+
+<div class="Box mb-3">
+    <div class="Box-header">Create Task</div>
+    <div class="Box-body">
+        <form data-signals="{taskTitle: '', taskCategory: 'Custom', taskPriority: 'Routine', taskDueAt: '', taskNotes: ''}"
+              data-on-submit__prevent="@post('/api/patients/{{.Patient.Id}}/tasks')">
+            <div class="grid grid-cols-3">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" data-bind-taskTitle placeholder="Task description" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select data-bind-taskCategory>
+                        <option value="Custom">Custom</option>
+                        <option value="Medication">Medication</option>
+                        <option value="Vital">Vital</option>
+                        <option value="Turn">Turn</option>
+                        <option value="Assessment">Assessment</option>
+                        <option value="Lab">Lab</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Priority</label>
+                    <select data-bind-taskPriority>
+                        <option value="Routine">Routine</option>
+                        <option value="Urgent">Urgent</option>
+                        <option value="STAT">STAT</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid grid-cols-2">
+                <div class="form-group">
+                    <label>Due At</label>
+                    <input type="datetime-local" data-bind-taskDueAt>
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <input type="text" data-bind-taskNotes placeholder="Optional notes">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" data-indicator-creating data-attr-aria-busy="$creating" data-attr-disabled="$creating">
+                Create Task
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="Box">
+    <div class="Box-header">Task Checklist</div>
+    <div id="tasks-list"
+         data-on-load="@get('/api/patients/{{.Patient.Id}}/tasks/stream')">
+        {{template "tasks_list_body" .}}
+    </div>
+</div>
+{{end}}

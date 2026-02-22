@@ -1,0 +1,24 @@
+{{define "vaccinations_list"}}
+<div id="vac-items">
+    {{if .Vaccinations}}
+    <table>
+        <thead>
+            <tr><th>Vaccine</th><th>Date</th><th>Lot #</th><th>Site</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+        {{range .Vaccinations}}
+        <tr id="vac-row-{{.Id}}">
+            <td>{{.VaccineName}}</td>
+            <td>{{.DateAdministered.Format "01/02/2006"}}</td>
+            <td>{{.LotNumber}}</td>
+            <td>{{.Site}}</td>
+            <td>{{.Notes}}</td>
+        </tr>
+        {{end}}
+        </tbody>
+    </table>
+    {{else}}
+    <p class="text-muted" style="margin:0;">No vaccination records.</p>
+    {{end}}
+</div>
+{{end}}

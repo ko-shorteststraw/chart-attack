@@ -1,0 +1,19 @@
+{{define "vitals_table_body"}}
+<tbody id="vitals-tbody">
+    {{range .Vitals}}
+    <tr id="vitals-row-{{.Id}}" {{if .IsAbnormal}}aria-invalid="true"{{end}}>
+        <td>{{.CreatedAt.Format "01/02 15:04"}}</td>
+        <td>{{if and .SystolicBP .DiastolicBP}}{{deref .SystolicBP}}/{{deref .DiastolicBP}}{{else}}&mdash;{{end}}</td>
+        <td>{{if .HeartRate}}{{deref .HeartRate}}{{else}}&mdash;{{end}}</td>
+        <td>{{if .Temperature}}{{printf "%.1f" (deref64 .Temperature)}}{{else}}&mdash;{{end}}</td>
+        <td>{{if .OxygenSat}}{{deref .OxygenSat}}%{{else}}&mdash;{{end}}</td>
+        <td>{{if .Respirations}}{{deref .Respirations}}{{else}}&mdash;{{end}}</td>
+        <td>{{if .PainLevel}}{{deref .PainLevel}}/10{{else}}&mdash;{{end}}</td>
+        <td>{{.Position}}</td>
+        <td>{{.Notes}}</td>
+    </tr>
+    {{else}}
+    <tr><td colspan="9">No vitals recorded yet.</td></tr>
+    {{end}}
+</tbody>
+{{end}}

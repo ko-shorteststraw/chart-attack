@@ -1,0 +1,28 @@
+{{define "patient_card"}}
+<div id="patient-card-{{.Id}}" class="Box">
+    <div class="Box-header d-flex align-center justify-between">
+        <strong>{{.RoomBed}}</strong>
+        <span>{{.FullName}}</span>
+    </div>
+    <div class="Box-body">
+        <p class="text-muted text-small mb-2">MRN: {{.MRN}}</p>
+        <div class="d-flex gap-2 mb-2" style="flex-wrap:wrap;">
+            {{if ne .CodeStatus "Full Code"}}
+            <span class="Label Label--danger">{{.CodeStatus}}</span>
+            {{end}}
+            {{if .FallRisk}}
+            <span class="Label Label--warning">Fall Risk</span>
+            {{end}}
+            {{if ne .IsolationType "None"}}
+            <span class="Label Label--purple">{{.IsolationType}}</span>
+            {{end}}
+        </div>
+        {{if .Allergies}}
+        <p class="text-small text-muted" style="margin:0;">Allergies: {{range $i, $a := .Allergies}}{{if $i}}, {{end}}{{$a}}{{end}}</p>
+        {{end}}
+    </div>
+    <div class="Box-footer">
+        <a href="/patients/{{.Id}}" class="btn btn-outline btn-sm">Chart</a>
+    </div>
+</div>
+{{end}}

@@ -1,0 +1,22 @@
+{{define "health_history_list"}}
+<div id="hh-items">
+    {{if .HealthHistory}}
+    <table>
+        <thead>
+            <tr><th>Condition</th><th>Status</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+        {{range .HealthHistory}}
+        <tr id="hh-row-{{.Id}}">
+            <td>{{.Condition}}</td>
+            <td><span class="Label {{if eq .Status "Active"}}Label--warning{{else if eq .Status "Resolved"}}Label--success{{else}}Label--default{{end}}">{{.Status}}</span></td>
+            <td>{{.Description}}</td>
+        </tr>
+        {{end}}
+        </tbody>
+    </table>
+    {{else}}
+    <p class="text-muted" style="margin:0;">No health history entries.</p>
+    {{end}}
+</div>
+{{end}}

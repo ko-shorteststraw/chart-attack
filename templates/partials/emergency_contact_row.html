@@ -1,0 +1,25 @@
+{{define "emergency_contacts_list"}}
+<div id="ec-items">
+    {{if .Contacts}}
+    <table>
+        <thead>
+            <tr><th>Name</th><th>Relationship</th><th>Phone</th><th>Email</th><th></th></tr>
+        </thead>
+        <tbody>
+        {{range .Contacts}}
+        <tr id="ec-row-{{.Id}}">
+            <td>{{.Name}}{{if .IsPrimary}} <span class="Label Label--success">Primary</span>{{end}}</td>
+            <td>{{.Relationship}}</td>
+            <td>{{.Phone}}</td>
+            <td>{{.Email}}</td>
+            <td><button class="btn btn-sm" style="color: var(--color-danger-fg);"
+                        data-on-click="@post('/api/emergency-contacts/{{.Id}}/remove')">Remove</button></td>
+        </tr>
+        {{end}}
+        </tbody>
+    </table>
+    {{else}}
+    <p class="text-muted" style="margin:0;">No emergency contacts on file.</p>
+    {{end}}
+</div>
+{{end}}
