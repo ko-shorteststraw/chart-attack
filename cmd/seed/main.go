@@ -104,30 +104,35 @@ func main() {
 		}
 	}
 
-	// Create sample medications
-	meds := []struct {
-		name, brand, class, dose, route, freq string
-		highAlert                              bool
-	}{
-		{"Metoprolol", "Lopressor", "Beta Blocker", "25mg", "PO", "BID", false},
-		{"Lisinopril", "Zestril", "ACE Inhibitor", "10mg", "PO", "Daily", false},
-		{"Furosemide", "Lasix", "Loop Diuretic", "40mg", "IV", "BID", false},
-		{"Heparin", "Heparin", "Anticoagulant", "5000 units", "SQ", "Q8H", true},
-		{"Morphine", "MS Contin", "Opioid Analgesic", "2mg", "IV", "Q4H PRN", true},
-		{"Acetaminophen", "Tylenol", "Analgesic", "650mg", "PO", "Q6H PRN", false},
-	}
-	for _, m := range meds {
-		med, err := entities.NewMedication(m.name, m.brand, m.class, m.dose, m.route, m.freq, m.highAlert)
-		if err != nil {
-			slog.Error("failed to create medication", "name", m.name, "error", err)
-			continue
+	// Create sample medications (skip if any already exist)
+	existingMeds, _ := medicationRepo.FindAll(ctx)
+	if len(existingMeds) == 0 {
+		meds := []struct {
+			name, brand, class, dose, route, freq string
+			highAlert                              bool
+		}{
+			{"Metoprolol", "Lopressor", "Beta Blocker", "25mg", "PO", "BID", false},
+			{"Lisinopril", "Zestril", "ACE Inhibitor", "10mg", "PO", "Daily", false},
+			{"Furosemide", "Lasix", "Loop Diuretic", "40mg", "IV", "BID", false},
+			{"Heparin", "Heparin", "Anticoagulant", "5000 units", "SQ", "Q8H", true},
+			{"Morphine", "MS Contin", "Opioid Analgesic", "2mg", "IV", "Q4H PRN", true},
+			{"Acetaminophen", "Tylenol", "Analgesic", "650mg", "PO", "Q6H PRN", false},
 		}
-		validated, _ := entities.NewValidatedMedication(med)
-		if err := medicationRepo.Save(ctx, validated); err != nil {
-			slog.Warn("medication may already exist", "name", m.name, "error", err)
-		} else {
-			slog.Info("created medication", "name", m.name, "id", med.Id)
+		for _, m := range meds {
+			med, err := entities.NewMedication(m.name, m.brand, m.class, m.dose, m.route, m.freq, m.highAlert)
+			if err != nil {
+				slog.Error("failed to create medication", "name", m.name, "error", err)
+				continue
+			}
+			validated, _ := entities.NewValidatedMedication(med)
+			if err := medicationRepo.Save(ctx, validated); err != nil {
+				slog.Warn("medication may already exist", "name", m.name, "error", err)
+			} else {
+				slog.Info("created medication", "name", m.name, "id", med.Id)
+			}
 		}
+	} else {
+		slog.Info("medications already seeded", "count", len(existingMeds))
 	}
 
 	slog.Info("seed complete")
