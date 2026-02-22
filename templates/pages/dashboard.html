@@ -9,7 +9,7 @@
 </div>
 
 <div id="census-grid" class="census-grid"
-     data-on-load="@get('/api/census/stream')">
+     data-on:load="@get('/api/census/stream')">
     {{range .Patients}}
     {{template "patient_card" .}}
     {{else}}

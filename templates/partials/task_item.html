@@ -7,7 +7,7 @@
             <span style="color: var(--color-success-fg);">&#10003;</span>
             <span style="text-decoration: line-through; color: var(--color-fg-muted);">{{.Title}}</span>
             {{else}}
-            <button class="btn btn-sm btn-outline" data-on-click="@post('/api/tasks/{{.Id}}/complete')">&#10003;</button>
+            <button class="btn btn-sm btn-outline" data-on:click="@post('/api/tasks/{{.Id}}/complete')">&#10003;</button>
             <span>{{.Title}}</span>
             {{end}}
             <span class="Label {{if eq .Priority "STAT"}}Label--danger{{else if eq .Priority "Urgent"}}Label--warning{{else}}Label--default{{end}}">{{.Priority}}</span>

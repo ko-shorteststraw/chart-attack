@@ -13,7 +13,7 @@
             <td>{{.Phone}}</td>
             <td>{{.Email}}</td>
             <td><button class="btn btn-sm" style="color: var(--color-danger-fg);"
-                        data-on-click="@post('/api/emergency-contacts/{{.Id}}/remove')">Remove</button></td>
+                        data-on:click="@post('/api/emergency-contacts/{{.Id}}/remove')">Remove</button></td>
         </tr>
         {{end}}
         </tbody>

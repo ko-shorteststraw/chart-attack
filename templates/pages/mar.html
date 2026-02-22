@@ -18,11 +18,11 @@
     <div class="Box-header">Administer Medication</div>
     <div class="Box-body">
         <form data-signals="{medicationId: '', dose: '', route: 'PO'}"
-              data-on-submit__prevent="@post('/api/patients/{{.Patient.Id}}/mar')">
+              data-on:submit__prevent="@post('/api/patients/{{.Patient.Id}}/mar')">
             <div class="grid grid-cols-3">
                 <div class="form-group">
                     <label>Medication</label>
-                    <select data-bind-medicationId>
+                    <select data-bind:medicationId>
                         <option value="">Select medication...</option>
                         {{range .Medications}}
                         <option value="{{.Id}}">{{.Name}}{{if .BrandName}} ({{.BrandName}}){{end}}</option>
@@ -31,11 +31,11 @@
                 </div>
                 <div class="form-group">
                     <label>Dose</label>
-                    <input type="text" data-bind-dose placeholder="e.g. 500mg">
+                    <input type="text" data-bind:dose placeholder="e.g. 500mg">
                 </div>
                 <div class="form-group">
                     <label>Route</label>
-                    <select data-bind-route>
+                    <select data-bind:route>
                         <option value="PO">PO</option>
                         <option value="IV">IV</option>
                         <option value="IM">IM</option>
@@ -46,7 +46,7 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" data-indicator-administering data-attr-aria-busy="$administering" data-attr-disabled="$administering">
+            <button type="submit" class="btn btn-primary" data-indicator:administering data-attr:aria-busy="$administering" data-attr:disabled="$administering">
                 Administer Now
             </button>
         </form>
@@ -56,7 +56,7 @@
 <div class="Box">
     <div class="Box-header">Medication Administration Record</div>
     <div id="mar-history"
-         data-on-load="@get('/api/patients/{{.Patient.Id}}/mar/stream')">
+         data-on:load="@get('/api/patients/{{.Patient.Id}}/mar/stream')">
         <table>
             <thead>
                 <tr>

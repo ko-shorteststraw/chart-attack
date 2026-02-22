@@ -45,13 +45,13 @@
     </div>
     <div class="Box-body">
         <div id="diagnosis-list"
-             data-on-load="@get('/api/patients/{{.Patient.Id}}/diagnoses/stream')">
+             data-on:load="@get('/api/patients/{{.Patient.Id}}/diagnoses/stream')">
             {{template "diagnosis_list" .}}
         </div>
         <form class="d-flex gap-2 mt-2"
               data-signals="{newDiagnosis: ''}"
-              data-on-submit__prevent="@post('/api/patients/{{.Patient.Id}}/diagnoses')">
-            <input type="text" data-bind-newDiagnosis placeholder="Add diagnosis..." style="margin-bottom:0;flex:1;">
+              data-on:submit__prevent="@post('/api/patients/{{.Patient.Id}}/diagnoses')">
+            <input type="text" data-bind:newDiagnosis placeholder="Add diagnosis..." style="margin-bottom:0;flex:1;">
             <button type="submit" class="btn btn-sm btn-primary">Add</button>
         </form>
     </div>
@@ -62,17 +62,17 @@
     <div class="Box-header">Emergency Contacts</div>
     <div class="Box-body">
         <div id="emergency-contacts-list"
-             data-on-load="@get('/api/patients/{{.Patient.Id}}/emergency-contacts/stream')">
+             data-on:load="@get('/api/patients/{{.Patient.Id}}/emergency-contacts/stream')">
             {{template "emergency_contacts_list" .}}
         </div>
         <form class="mt-2"
               data-signals="{ecName: '', ecRelationship: '', ecPhone: '', ecEmail: ''}"
-              data-on-submit__prevent="@post('/api/patients/{{.Patient.Id}}/emergency-contacts')">
+              data-on:submit__prevent="@post('/api/patients/{{.Patient.Id}}/emergency-contacts')">
             <div class="grid grid-cols-4">
-                <input type="text" data-bind-ecName placeholder="Name" style="margin-bottom:0;">
-                <input type="text" data-bind-ecRelationship placeholder="Relationship" style="margin-bottom:0;">
-                <input type="text" data-bind-ecPhone placeholder="Phone" style="margin-bottom:0;">
-                <input type="text" data-bind-ecEmail placeholder="Email" style="margin-bottom:0;">
+                <input type="text" data-bind:ecName placeholder="Name" style="margin-bottom:0;">
+                <input type="text" data-bind:ecRelationship placeholder="Relationship" style="margin-bottom:0;">
+                <input type="text" data-bind:ecPhone placeholder="Phone" style="margin-bottom:0;">
+                <input type="text" data-bind:ecEmail placeholder="Email" style="margin-bottom:0;">
             </div>
             <button type="submit" class="btn btn-sm btn-primary mt-2">Add Contact</button>
         </form>
@@ -84,17 +84,17 @@
     <div class="Box-header">Vaccination Records</div>
     <div class="Box-body">
         <div id="vaccinations-list"
-             data-on-load="@get('/api/patients/{{.Patient.Id}}/vaccinations/stream')">
+             data-on:load="@get('/api/patients/{{.Patient.Id}}/vaccinations/stream')">
             {{template "vaccinations_list" .}}
         </div>
         <form class="mt-2"
               data-signals="{vaccineName: '', vaccineDate: '', vaccineLot: '', vaccineSite: ''}"
-              data-on-submit__prevent="@post('/api/patients/{{.Patient.Id}}/vaccinations')">
+              data-on:submit__prevent="@post('/api/patients/{{.Patient.Id}}/vaccinations')">
             <div class="grid grid-cols-4">
-                <input type="text" data-bind-vaccineName placeholder="Vaccine name" style="margin-bottom:0;">
-                <input type="date" data-bind-vaccineDate style="margin-bottom:0;">
-                <input type="text" data-bind-vaccineLot placeholder="Lot #" style="margin-bottom:0;">
-                <input type="text" data-bind-vaccineSite placeholder="Site" style="margin-bottom:0;">
+                <input type="text" data-bind:vaccineName placeholder="Vaccine name" style="margin-bottom:0;">
+                <input type="date" data-bind:vaccineDate style="margin-bottom:0;">
+                <input type="text" data-bind:vaccineLot placeholder="Lot #" style="margin-bottom:0;">
+                <input type="text" data-bind:vaccineSite placeholder="Site" style="margin-bottom:0;">
             </div>
             <button type="submit" class="btn btn-sm btn-primary mt-2">Add Vaccination</button>
         </form>
@@ -106,20 +106,20 @@
     <div class="Box-header">Health History</div>
     <div class="Box-body">
         <div id="health-history-list"
-             data-on-load="@get('/api/patients/{{.Patient.Id}}/health-history/stream')">
+             data-on:load="@get('/api/patients/{{.Patient.Id}}/health-history/stream')">
             {{template "health_history_list" .}}
         </div>
         <form class="mt-2"
               data-signals="{hhCondition: '', hhStatus: 'Active', hhDescription: ''}"
-              data-on-submit__prevent="@post('/api/patients/{{.Patient.Id}}/health-history')">
+              data-on:submit__prevent="@post('/api/patients/{{.Patient.Id}}/health-history')">
             <div class="grid grid-cols-3">
-                <input type="text" data-bind-hhCondition placeholder="Condition" style="margin-bottom:0;">
-                <select data-bind-hhStatus style="margin-bottom:0;">
+                <input type="text" data-bind:hhCondition placeholder="Condition" style="margin-bottom:0;">
+                <select data-bind:hhStatus style="margin-bottom:0;">
                     <option value="Active">Active</option>
                     <option value="Resolved">Resolved</option>
                     <option value="Chronic">Chronic</option>
                 </select>
-                <input type="text" data-bind-hhDescription placeholder="Description" style="margin-bottom:0;">
+                <input type="text" data-bind:hhDescription placeholder="Description" style="margin-bottom:0;">
             </div>
             <button type="submit" class="btn btn-sm btn-primary mt-2">Add Entry</button>
         </form>

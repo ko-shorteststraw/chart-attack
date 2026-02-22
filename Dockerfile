@@ -21,4 +21,4 @@ COPY static/ /app/static/
 
 EXPOSE 8080
 
-CMD ["/app/chart-attack"]
+CMD sh -c "/app/chart-attack-seed && /app/chart-attack"

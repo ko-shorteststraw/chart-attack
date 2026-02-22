@@ -9,35 +9,35 @@
     <div class="Box-header">Patient Information</div>
     <div class="Box-body">
         <form data-signals="{mrn: '', firstName: '', lastName: '', dateOfBirth: '', roomBed: '', codeStatus: 'Full Code', isolationType: 'None'}"
-              data-on-submit__prevent="@post('/api/patients')">
+              data-on:submit__prevent="@post('/api/patients')">
             <div class="grid grid-cols-2">
                 <div class="form-group">
                     <label>MRN</label>
-                    <input type="text" data-bind-mrn placeholder="Medical Record Number" required>
+                    <input type="text" data-bind:mrn placeholder="Medical Record Number" required>
                 </div>
                 <div class="form-group">
                     <label>Room / Bed</label>
-                    <input type="text" data-bind-roomBed placeholder="e.g. 401-A" required>
+                    <input type="text" data-bind:roomBed placeholder="e.g. 401-A" required>
                 </div>
             </div>
             <div class="grid grid-cols-2">
                 <div class="form-group">
                     <label>First Name</label>
-                    <input type="text" data-bind-firstName placeholder="First name" required>
+                    <input type="text" data-bind:firstName placeholder="First name" required>
                 </div>
                 <div class="form-group">
                     <label>Last Name</label>
-                    <input type="text" data-bind-lastName placeholder="Last name" required>
+                    <input type="text" data-bind:lastName placeholder="Last name" required>
                 </div>
             </div>
             <div class="grid grid-cols-3">
                 <div class="form-group">
                     <label>Date of Birth</label>
-                    <input type="date" data-bind-dateOfBirth required>
+                    <input type="date" data-bind:dateOfBirth required>
                 </div>
                 <div class="form-group">
                     <label>Code Status</label>
-                    <select data-bind-codeStatus>
+                    <select data-bind:codeStatus>
                         <option value="Full Code">Full Code</option>
                         <option value="DNR">DNR</option>
                         <option value="DNI">DNI</option>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="form-group">
                     <label>Isolation Type</label>
-                    <select data-bind-isolationType>
+                    <select data-bind:isolationType>
                         <option value="None">None</option>
                         <option value="Contact">Contact</option>
                         <option value="Droplet">Droplet</option>
@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary" data-indicator-admitting data-attr-aria-busy="$admitting" data-attr-disabled="$admitting">
+                <button type="submit" class="btn btn-primary" data-indicator:admitting data-attr:aria-busy="$admitting" data-attr:disabled="$admitting">
                     Admit Patient
                 </button>
                 <a href="/" class="btn">Cancel</a>

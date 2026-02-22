@@ -142,16 +142,16 @@ func (cc *ChartingController) RecordVitals(c echo.Context) error {
 	}
 
 	var signals struct {
-		Systolic  *int     `json:"systolic"`
-		Diastolic *int     `json:"diastolic"`
-		HR        *int     `json:"hr"`
-		Temp      *float64 `json:"temp"`
-		TempRoute string   `json:"tempRoute"`
-		O2        *int     `json:"o2"`
-		Resp      *int     `json:"resp"`
-		Pain      *int     `json:"pain"`
-		Position  string   `json:"position"`
-		Notes     string   `json:"notes"`
+		Systolic  any    `json:"systolic"`
+		Diastolic any    `json:"diastolic"`
+		HR        any    `json:"hr"`
+		Temp      any    `json:"temp"`
+		TempRoute string `json:"tempRoute"`
+		O2        any    `json:"o2"`
+		Resp      any    `json:"resp"`
+		Pain      any    `json:"pain"`
+		Position  string `json:"position"`
+		Notes     string `json:"notes"`
 	}
 
 	if err := datastar.ReadSignals(c.Request(), &signals); err != nil {
@@ -165,14 +165,14 @@ func (cc *ChartingController) RecordVitals(c echo.Context) error {
 		IdempotencyKey: uuid.New().String(),
 		PatientId:      patientId,
 		RecordedBy:     demoUserId,
-		SystolicBP:     signals.Systolic,
-		DiastolicBP:    signals.Diastolic,
-		HeartRate:      signals.HR,
-		Temperature:    signals.Temp,
+		SystolicBP:     parseIntSignal(signals.Systolic),
+		DiastolicBP:    parseIntSignal(signals.Diastolic),
+		HeartRate:      parseIntSignal(signals.HR),
+		Temperature:    parseFloatSignal(signals.Temp),
 		TempRoute:      signals.TempRoute,
-		OxygenSat:      signals.O2,
-		Respirations:   signals.Resp,
-		PainLevel:      signals.Pain,
+		OxygenSat:      parseIntSignal(signals.O2),
+		Respirations:   parseIntSignal(signals.Resp),
+		PainLevel:      parseIntSignal(signals.Pain),
 		Position:       signals.Position,
 		Notes:          signals.Notes,
 	}

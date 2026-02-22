@@ -18,15 +18,15 @@
     <div class="Box-header">Create Task</div>
     <div class="Box-body">
         <form data-signals="{taskTitle: '', taskCategory: 'Custom', taskPriority: 'Routine', taskDueAt: '', taskNotes: ''}"
-              data-on-submit__prevent="@post('/api/patients/{{.Patient.Id}}/tasks')">
+              data-on:submit__prevent="@post('/api/patients/{{.Patient.Id}}/tasks')">
             <div class="grid grid-cols-3">
                 <div class="form-group">
                     <label>Title</label>
-                    <input type="text" data-bind-taskTitle placeholder="Task description" required>
+                    <input type="text" data-bind:taskTitle placeholder="Task description" required>
                 </div>
                 <div class="form-group">
                     <label>Category</label>
-                    <select data-bind-taskCategory>
+                    <select data-bind:taskCategory>
                         <option value="Custom">Custom</option>
                         <option value="Medication">Medication</option>
                         <option value="Vital">Vital</option>
@@ -37,7 +37,7 @@
                 </div>
                 <div class="form-group">
                     <label>Priority</label>
-                    <select data-bind-taskPriority>
+                    <select data-bind:taskPriority>
                         <option value="Routine">Routine</option>
                         <option value="Urgent">Urgent</option>
                         <option value="STAT">STAT</option>
@@ -47,14 +47,14 @@
             <div class="grid grid-cols-2">
                 <div class="form-group">
                     <label>Due At</label>
-                    <input type="datetime-local" data-bind-taskDueAt>
+                    <input type="datetime-local" data-bind:taskDueAt>
                 </div>
                 <div class="form-group">
                     <label>Notes</label>
-                    <input type="text" data-bind-taskNotes placeholder="Optional notes">
+                    <input type="text" data-bind:taskNotes placeholder="Optional notes">
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" data-indicator-creating data-attr-aria-busy="$creating" data-attr-disabled="$creating">
+            <button type="submit" class="btn btn-primary" data-indicator:creating data-attr:aria-busy="$creating" data-attr:disabled="$creating">
                 Create Task
             </button>
         </form>
@@ -64,7 +64,7 @@
 <div class="Box">
     <div class="Box-header">Task Checklist</div>
     <div id="tasks-list"
-         data-on-load="@get('/api/patients/{{.Patient.Id}}/tasks/stream')">
+         data-on:load="@get('/api/patients/{{.Patient.Id}}/tasks/stream')">
         {{template "tasks_list_body" .}}
     </div>
 </div>

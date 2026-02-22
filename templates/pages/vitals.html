@@ -27,29 +27,29 @@
     <div class="Box-header">Record Vital Signs</div>
     <div class="Box-body">
         <form data-signals="{systolic: null, diastolic: null, hr: null, temp: null, tempRoute: 'Oral', o2: null, resp: null, pain: null, position: 'Sitting', notes: ''}"
-              data-on-submit__prevent="@post('/api/patients/{{.Patient.Id}}/vitals')">
+              data-on:submit__prevent="@post('/api/patients/{{.Patient.Id}}/vitals')">
             <div class="grid grid-cols-3">
                 <div class="form-group">
                     <label>Systolic BP</label>
-                    <input type="number" data-bind-systolic placeholder="mmHg" min="0" max="400">
+                    <input type="number" data-bind:systolic placeholder="mmHg" min="0" max="400">
                 </div>
                 <div class="form-group">
                     <label>Diastolic BP</label>
-                    <input type="number" data-bind-diastolic placeholder="mmHg" min="0" max="300">
+                    <input type="number" data-bind:diastolic placeholder="mmHg" min="0" max="300">
                 </div>
                 <div class="form-group">
                     <label>Heart Rate</label>
-                    <input type="number" data-bind-hr placeholder="bpm" min="0" max="400">
+                    <input type="number" data-bind:hr placeholder="bpm" min="0" max="400">
                 </div>
             </div>
             <div class="grid grid-cols-3">
                 <div class="form-group">
                     <label>Temperature</label>
-                    <input type="number" step="0.1" data-bind-temp placeholder="&deg;F" min="80" max="115">
+                    <input type="number" step="0.1" data-bind:temp placeholder="&deg;F" min="80" max="115">
                 </div>
                 <div class="form-group">
                     <label>Temp Route</label>
-                    <select data-bind-tempRoute>
+                    <select data-bind:tempRoute>
                         <option value="Oral">Oral</option>
                         <option value="Tympanic">Tympanic</option>
                         <option value="Axillary">Axillary</option>
@@ -59,21 +59,21 @@
                 </div>
                 <div class="form-group">
                     <label>SpO2</label>
-                    <input type="number" data-bind-o2 placeholder="%" min="0" max="100">
+                    <input type="number" data-bind:o2 placeholder="%" min="0" max="100">
                 </div>
             </div>
             <div class="grid grid-cols-3">
                 <div class="form-group">
                     <label>Respirations</label>
-                    <input type="number" data-bind-resp placeholder="breaths/min" min="0" max="100">
+                    <input type="number" data-bind:resp placeholder="breaths/min" min="0" max="100">
                 </div>
                 <div class="form-group">
                     <label>Pain Level</label>
-                    <input type="number" data-bind-pain placeholder="0-10" min="0" max="10">
+                    <input type="number" data-bind:pain placeholder="0-10" min="0" max="10">
                 </div>
                 <div class="form-group">
                     <label>Position</label>
-                    <select data-bind-position>
+                    <select data-bind:position>
                         <option value="Sitting">Sitting</option>
                         <option value="Standing">Standing</option>
                         <option value="Supine">Supine</option>
@@ -83,9 +83,9 @@
             </div>
             <div class="form-group">
                 <label>Notes</label>
-                <textarea data-bind-notes placeholder="Additional notes..." rows="2"></textarea>
+                <textarea data-bind:notes placeholder="Additional notes..." rows="2"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary" data-indicator-saving data-attr-aria-busy="$saving" data-attr-disabled="$saving">
+            <button type="submit" class="btn btn-primary" data-indicator:saving data-attr:aria-busy="$saving" data-attr:disabled="$saving">
                 Record Vitals
             </button>
         </form>
@@ -95,7 +95,7 @@
 <div class="Box">
     <div class="Box-header">Vital Signs History</div>
     <div id="vitals-history"
-         data-on-load="@get('/api/patients/{{.Patient.Id}}/vitals/stream')">
+         data-on:load="@get('/api/patients/{{.Patient.Id}}/vitals/stream')">
         <table>
             <thead>
                 <tr>
